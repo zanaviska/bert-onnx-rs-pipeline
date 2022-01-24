@@ -15,7 +15,7 @@ use tokenizers::utils::truncation::TruncationParams;
 use tokenizers::utils::truncation::TruncationStrategy::LongestFirst;
 fn main() -> std::result::Result<(), OrtError> {
     let start = Instant::now();
-    let vocab_path = "./src/vocab.txt";
+    let vocab_path = "/kaggle/input/bert-pipeline/vocab.txt";
     let wp_builder = WordPieceBuilder::new()
         .files(vocab_path.into())
         .continuing_subword_prefix("##".into())
@@ -71,7 +71,7 @@ fn main() -> std::result::Result<(), OrtError> {
     }));
 
     let mut rdr = ReaderBuilder::new()
-        .from_path("./medium.csv")
+        .from_path("/kaggle/input/bert-pipeline/medium.csv")
         .unwrap();
     let environment = environment::Environment::builder()
         .with_name("test")
@@ -81,7 +81,7 @@ fn main() -> std::result::Result<(), OrtError> {
             .new_session_builder()?
             .use_cuda(0)?
             .with_optimization_level(GraphOptimizationLevel::All)?
-            .with_model_from_file("./src/onnx_model.onnx")?,
+            .with_model_from_file("/kaggle/input/bert-pipeline/onnx_model.onnx")?,
     ));
     let setup = Instant::now();
 
